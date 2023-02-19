@@ -1,12 +1,6 @@
-import NotFound from "@/components/ErrorMessage/404";
-import LayoutIndex from "@/layouts";
-import DataVisualize from "@/views/dashboard/dataVisualize";
-import DataScreen from "@/views/dataScreen";
-import Home from "@/views/home";
-import Login from "@/views/login";
-import UseComponent from "@/views/table/useComponent";
-import UseHooks from "@/views/table/useHooks";
+import { lazy } from "react";
 import { Navigate, RouteObject, useRoutes } from "react-router-dom";
+import lazyLoad from "./lazyLoad";
 
 const rootRouter: RouteObject[] = [
 	{
@@ -15,36 +9,36 @@ const rootRouter: RouteObject[] = [
 	},
 	{
 		path: "/login",
-		element: <Login />
+		element: lazyLoad(lazy(() => import("@/views/login")))
 	},
 	{
-		element: <LayoutIndex name="参数" />,
+		element: lazyLoad(lazy(() => import("@/layouts"))),
 		children: [
 			{
 				path: "/home",
-				element: <Home />
+				element: lazyLoad(lazy(() => import("@/views/home")))
 			},
 			{
 				path: "/dataScreen",
-				element: <DataScreen />
+				element: lazyLoad(lazy(() => import("@/views/dataScreen")))
 			},
 			{
 				path: "/proTable/useHooks",
-				element: <UseHooks />
+				element: lazyLoad(lazy(() => import("@/views/table/useHooks")))
 			},
 			{
 				path: "/proTable/useComponent",
-				element: <UseComponent />
+				element: lazyLoad(lazy(() => import("@/views/table/useComponent")))
 			},
 			{
 				path: "/dashboard/dataVisualize",
-				element: <DataVisualize />
+				element: lazyLoad(lazy(() => import("@/views/dashboard/dataVisualize")))
 			}
 		]
 	},
 	{
 		path: "*",
-		element: <NotFound />
+		element: lazyLoad(lazy(() => import("@/components/ErrorMessage/404")))
 	}
 ];
 

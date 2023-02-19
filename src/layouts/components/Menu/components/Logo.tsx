@@ -1,7 +1,6 @@
 import logo from "@/assets/icons/logo.svg";
-type Props = {};
 
-const Logo = (props: Props) => {
+const Logo = () => {
 	return (
 		<div className="logo-box">
 			<img src={logo} alt="logo" className="logo-img" />
