@@ -1,4 +1,4 @@
-import { Breadcrumb } from 'antd';
+import { Breadcrumb } from "antd";
 
 const BreadcrumbNav = () => {
 	return (
