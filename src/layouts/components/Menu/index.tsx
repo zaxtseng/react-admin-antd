@@ -10,6 +10,7 @@ import {
 import { Menu, MenuProps } from "antd";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { getOpenKeys } from "../../../utils/util";
 import Logo from "./components/Logo";
 import "./index.less";
 
@@ -17,8 +18,8 @@ import "./index.less";
 
 const LayoutMenu = () => {
 	const { pathname } = useLocation();
-	const [menuActive, setMenuActive] = useState<string>("");
-	const [subMenuActive, setSubMenuActive] = useState<string>("");
+	const [selectedKeys, setSelectedKeys] = useState<string[]>([pathname]);
+	const [openKeys, setOpenKeys] = useState<string[]>([]);
 
 	const [menuList] = useState([
 		{
@@ -141,30 +142,26 @@ const LayoutMenu = () => {
 			]
 		}
 	]);
-	const getSubMenuActive = () => {
-		menuList.map((item: any) => {
-			if (item.children) {
-				item.children.map((child: any) => {
-					if (child.key === pathname) {
-						setSubMenuActive(item?.key);
-					}
-				});
-			}
-		});
-	};
+
 	const navigate = useNavigate();
 	// 点击当前菜单
-	const clickMenu: MenuProps["onClick"] = e => {
-		navigate(e.key);
+	const clickMenu: MenuProps["onClick"] = ({ key }: { key: string }) => {
+		navigate(key);
 	};
-	// 当前展开的 subMenu
-	const openSubMenu = (openKeys: any) => {
-		if (openKeys.length === 0) return setSubMenuActive("");
-		setSubMenuActive(openKeys[1]);
+
+	// 设置当前展开的 subMenu
+	const onOpenChange = () => {
+		if (openKeys.length === 0 || openKeys.length === 1) return setOpenKeys(openKeys);
+		const latestOpenKey = openKeys[openKeys.length - 1];
+		// 最新展开的 subMenu
+		if (latestOpenKey.includes(openKeys[0])) return setOpenKeys(openKeys);
+		setOpenKeys([latestOpenKey]);
 	};
 	useEffect(() => {
-		getSubMenuActive();
-		setMenuActive(pathname);
+		// getSubMenuActive();
+		// setMenuActive(pathname);
+		setSelectedKeys([pathname]);
+		setOpenKeys(getOpenKeys(pathname));
 	}, [pathname]);
 
 	return (
@@ -174,11 +171,11 @@ const LayoutMenu = () => {
 				theme="dark"
 				mode="inline"
 				triggerSubMenuAction="click"
-				selectedKeys={[menuActive]}
+				selectedKeys={selectedKeys}
 				items={menuList}
-				openKeys={[subMenuActive]}
+				openKeys={openKeys}
 				onClick={clickMenu}
-				onOpenChange={openSubMenu}
+				onOpenChange={onOpenChange}
 			></Menu>
 		</div>
 	);
