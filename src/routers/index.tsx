@@ -37,6 +37,14 @@ const rootRouter: RouteObject[] = [
 		]
 	},
 	{
+		path: "/403",
+		element: lazyLoad(lazy(() => import("@/components/ErrorMessage/403")))
+	},
+	{
+		path: "/500",
+		element: lazyLoad(lazy(() => import("@/components/ErrorMessage/500")))
+	},
+	{
 		path: "*",
 		element: lazyLoad(lazy(() => import("@/components/ErrorMessage/404")))
 	}
