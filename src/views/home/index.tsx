@@ -1,8 +1,9 @@
 import welcome from "@/assets/images/welcome.png";
+import "./index.less";
 
 const Home = () => {
 	return (
-		<div>
+		<div className="home">
 			<img src={welcome} alt="welcome" />
 		</div>
 	);
