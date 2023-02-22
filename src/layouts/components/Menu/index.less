@@ -25,4 +25,19 @@
 		overflow-x: hidden;
 		overflow-y: auto;
 	}
+	.ant-spin-nested-loading,
+	.ant-spin-container {
+		height: 100%;
+		.ant-spin {
+			max-height: 100% !important;
+		}
+		.ant-spin-container::after {
+			background: transparent !important;
+		}
+		.ant-spin-blur {
+			overflow: auto !important;
+			clear: none !important;
+			opacity: 1 !important;
+		}
+	}
 }

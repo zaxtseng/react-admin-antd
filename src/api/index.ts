@@ -36,7 +36,7 @@ class Request {
 				// * 如果当前请求不需要显示 loading, 在 api 服务中通过指定的第三个参数: { headers: { noLoading: true } } 来控制不显示Loading
 				config.headers!.noLoading || showFullScreenLoading();
 				const token: string = "bqddxxwqmfncffacvbpkuxvwvqrhln";
-				config.headers.common["x-access-token"] = token;
+				config.headers["x-access-token"] = token;
 				// return { ...config, headers: { ...config.headers, common: { "x-access-token": token } } };
 				return config;
 			},

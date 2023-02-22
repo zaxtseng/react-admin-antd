@@ -1,3 +1,4 @@
+import { HOME_URL } from "@/config/config";
 import { HomeFilled } from "@ant-design/icons";
 import { Tabs } from "antd";
 import { useEffect, useState } from "react";
@@ -12,11 +13,7 @@ const LayoutTabs = () => {
 	const tabsList = [
 		{
 			title: "首页",
-			path: "/home"
-		},
-		{
-			title: "超级表格",
-			path: "/proTable"
+			path: HOME_URL
 		},
 		{
 			title: "数据大屏",
@@ -24,51 +21,15 @@ const LayoutTabs = () => {
 		},
 		{
 			title: "使用 Hooks",
-			path: "/useHooks"
+			path: "/table/useHooks"
 		},
 		{
 			title: "使用 Component",
-			path: "/useComponent"
+			path: "/table/useComponent"
 		},
 		{
 			title: "数据可视化",
-			path: "/dashboard"
-		},
-		{
-			title: "内嵌页面",
-			path: "/embedded"
-		},
-		{
-			title: "基础 Form",
-			path: "/basicForm"
-		},
-		{
-			title: "校验 Form",
-			path: "/validateForm"
-		},
-		{
-			title: "动态 Form",
-			path: "/dynamicForm"
-		},
-		{
-			title: "水型图",
-			path: "/waterChart"
-		},
-		{
-			title: "柱状图",
-			path: "/columnChart"
-		},
-		{
-			title: "折线图",
-			path: "/超级表格"
-		},
-		{
-			title: "雷达图",
-			path: "/radarChart"
-		},
-		{
-			title: "嵌套环形图",
-			path: "/nestedChart"
+			path: "/dashboard/data/Visualize"
 		}
 	];
 
@@ -91,10 +52,10 @@ const LayoutTabs = () => {
 			{tabsList.map(tab => (
 				<TabPane
 					key={tab.path}
-					closable={tab.path !== "/home"}
+					closable={tab.path !== HOME_URL}
 					tab={
 						<span>
-							{tab.path === "/home" ? <HomeFilled /> : ""}
+							{tab.path === HOME_URL ? <HomeFilled /> : ""}
 							{tab.title}
 						</span>
 					}
