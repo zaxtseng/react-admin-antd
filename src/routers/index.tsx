@@ -2,6 +2,17 @@ import { lazy } from "react";
 import { Navigate, RouteObject, useRoutes } from "react-router-dom";
 import lazyLoad from "./lazyLoad";
 
+// * 导入所有router
+const metaRouters: Record<string, { [key: string]: any }> = import.meta.glob("./modules/*.tsx", { eager: true });
+
+// * 处理路由
+export const routerArray: RouteObject[] = [];
+Object.keys(metaRouters).forEach(item => {
+	Object.keys(metaRouters[item]).forEach((key: any) => {
+		routerArray.push(...metaRouters[item][key]);
+	});
+});
+
 const rootRouter: RouteObject[] = [
 	{
 		path: "/",
@@ -9,44 +20,17 @@ const rootRouter: RouteObject[] = [
 	},
 	{
 		path: "/login",
-		element: lazyLoad(lazy(() => import("@/views/login")))
+		element: lazyLoad(lazy(() => import("@/views/login"))),
+		meta: {
+			requiresAuth: false,
+			title: "登录页",
+			key: "login"
+		}
 	},
-	{
-		element: lazyLoad(lazy(() => import("@/layouts"))),
-		children: [
-			{
-				path: "/home",
-				element: lazyLoad(lazy(() => import("@/views/home")))
-			},
-			{
-				path: "/dataScreen",
-				element: lazyLoad(lazy(() => import("@/views/dataScreen")))
-			},
-			{
-				path: "/proTable/useHooks",
-				element: lazyLoad(lazy(() => import("@/views/table/useHooks")))
-			},
-			{
-				path: "/proTable/useComponent",
-				element: lazyLoad(lazy(() => import("@/views/table/useComponent")))
-			},
-			{
-				path: "/dashboard/dataVisualize",
-				element: lazyLoad(lazy(() => import("@/views/dashboard/dataVisualize")))
-			}
-		]
-	},
-	{
-		path: "/403",
-		element: lazyLoad(lazy(() => import("@/components/ErrorMessage/403")))
-	},
-	{
-		path: "/500",
-		element: lazyLoad(lazy(() => import("@/components/ErrorMessage/500")))
-	},
+	...routerArray,
 	{
 		path: "*",
-		element: lazyLoad(lazy(() => import("@/components/ErrorMessage/404")))
+		element: <Navigate to="/404" />
 	}
 ];
 
