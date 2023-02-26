@@ -1,4 +1,6 @@
+import { RootState } from "@/redux";
 import { Layout } from "antd";
+import { useSelector } from "react-redux";
 import { Outlet, useLocation } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import LayoutFooter from "./components/Footer/index";
@@ -11,10 +13,11 @@ const { Sider, Content } = Layout;
 
 const LayoutIndex = () => {
 	const { pathname } = useLocation();
+	const isCollapse = useSelector((state: RootState) => state.menu.isCollapse);
 
 	return (
 		<Layout className="container">
-			<Sider trigger={null} collapsible collapsed={false}>
+			<Sider trigger={null} collapsible collapsed={isCollapse}>
 				<LayoutMenu />
 			</Sider>
 			<Layout>

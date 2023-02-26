@@ -1,7 +1,9 @@
 import { getMenuList } from "@/api/modules/login";
+import { RootState } from "@/redux";
 import * as Icons from "@ant-design/icons";
 import { Menu, MenuProps, Spin } from "antd";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getOpenKeys } from "../../../utils/util";
 import Logo from "./components/Logo";
@@ -10,6 +12,7 @@ import "./index.less";
 type MenuItem = Required<MenuProps>["items"][number];
 
 const LayoutMenu = () => {
+	const { isCollapse } = useSelector((state: RootState) => state.menu);
 	const { pathname } = useLocation();
 	const [selectedKeys, setSelectedKeys] = useState<string[]>([pathname]);
 	const [openKeys, setOpenKeys] = useState<string[]>([]);
@@ -78,8 +81,8 @@ const LayoutMenu = () => {
 		// getSubMenuActive();
 		// setMenuActive(pathname);
 		setSelectedKeys([pathname]);
-		setOpenKeys(getOpenKeys(pathname));
-	}, [pathname]);
+		isCollapse ? null : setOpenKeys(getOpenKeys(pathname));
+	}, [pathname, isCollapse]);
 
 	return (
 		<div className="menu">

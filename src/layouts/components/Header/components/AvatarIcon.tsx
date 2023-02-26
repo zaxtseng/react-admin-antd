@@ -33,7 +33,7 @@ const AvatarIcon = () => {
 					首页
 				</span>
 			),
-			key: "0"
+			key: "1"
 		},
 		{
 			label: (
@@ -41,7 +41,7 @@ const AvatarIcon = () => {
 					个人信息
 				</span>
 			),
-			key: "1"
+			key: "2"
 		},
 		{
 			label: (
@@ -49,7 +49,7 @@ const AvatarIcon = () => {
 					修改密码
 				</span>
 			),
-			key: "0"
+			key: "3"
 		},
 		{
 			label: (
@@ -57,7 +57,7 @@ const AvatarIcon = () => {
 					退出登录
 				</span>
 			),
-			key: "0"
+			key: "4"
 		}
 	];
 
