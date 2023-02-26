@@ -1,7 +1,7 @@
 import React from "react";
 import { RouteObject } from "react-router-dom";
 import { LayoutIndex } from "../constant";
-import lazyLoad from "../lazyLoad";
+import lazyLoad from "../util/lazyLoad";
 
 const dashboardRouter: Array<RouteObject> = [
 	{

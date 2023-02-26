@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import { Navigate, RouteObject, useRoutes } from "react-router-dom";
-import lazyLoad from "./lazyLoad";
+import lazyLoad from "./util/lazyLoad";
 
 // * 导入所有router
 const metaRouters: Record<string, { [key: string]: any }> = import.meta.glob("./modules/*.tsx", { eager: true });

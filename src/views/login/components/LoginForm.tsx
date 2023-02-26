@@ -1,12 +1,18 @@
 import { Login } from "@/api/interface";
+import { loginApi } from "@/api/modules/login";
+import { HOME_URL } from "@/config/config";
+import { setToken } from "@/redux/modules/global/action";
 import { CloseCircleOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, message } from "antd";
 import md5 from "js-md5";
 import { FC, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loginApi } from "../../../api/modules/login";
 
 const LoginForm: FC = () => {
+	// const dispatch = useDispatch();
+	const dispatch = useDispatch();
+
 	const [loading, setLoading] = useState<boolean>(false);
 	const [form] = Form.useForm();
 	const navigate = useNavigate();
@@ -14,9 +20,10 @@ const LoginForm: FC = () => {
 		try {
 			setLoading(true);
 			loginForm.password = md5(loginForm.password);
-			await loginApi(loginForm);
+			const { data } = await loginApi(loginForm);
+			dispatch(setToken(data!.access_token));
 			message.success("登录成功");
-			navigate("/home");
+			navigate(HOME_URL);
 		} catch (error) {
 			console.log(error);
 		} finally {

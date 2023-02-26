@@ -1,13 +1,13 @@
-import { ADD_TABS, SET_TABS_ACTIVE } from "@/redux/mutation-types";
-
-// * addTabs
-export const addTabs = (tabItem: Menu.MenuOptions) => ({
-	type: ADD_TABS,
-	tabItem
-});
+import { SET_TABS_ACTIVE, SET_TABS_LIST } from "@/redux/mutation-types";
 
 // * setTabsActive
 export const setTabsActive = (tabsActive: string) => ({
 	type: SET_TABS_ACTIVE,
 	tabsActive
+});
+
+// * setTabsList
+export const setTabsList = (tabsList: Menu.MenuOptions[]) => ({
+	type: SET_TABS_LIST,
+	tabsList
 });

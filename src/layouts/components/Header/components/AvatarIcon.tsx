@@ -1,7 +1,9 @@
 import avatar from "@/assets/images/avatar.png";
+import { setToken } from "@/redux/modules/global/action";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Avatar, Dropdown, MenuProps, message, Modal } from "antd";
 import { useRef } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import InfoModal from "./InfoModal";
 import PasswordModal from "./PasswordModal";
@@ -10,6 +12,7 @@ interface ModalProps {
 	showModal: (param: { name: number }) => void;
 }
 const AvatarIcon = () => {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const passRef = useRef<ModalProps>(null);
 	const infoRef = useRef<ModalProps>(null!);
@@ -22,7 +25,11 @@ const AvatarIcon = () => {
 			content: "是否确认退出登录?",
 			okText: "确认",
 			cancelText: "取消",
-			onOk: () => message.success("退出登录成功")
+			onOk: () => {
+				dispatch(setToken(""));
+				message.success("退出登录成功");
+				navigate("/login");
+			}
 		});
 	};
 

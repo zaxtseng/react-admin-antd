@@ -1,7 +1,7 @@
 import React from "react";
 import { LayoutIndex } from "../constant";
 import { RouteObject } from "../interface";
-import lazyLoad from "../lazyLoad";
+import lazyLoad from "../util/lazyLoad";
 
 const tableRouter: Array<RouteObject> = [
 	{
