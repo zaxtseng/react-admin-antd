@@ -1,5 +1,5 @@
 import { GlobalState } from "@/redux/interface";
-import { SET_TOKEN } from "@/redux/mutation-types";
+import { SET_ASSEMBLY_SIZE, SET_LANGUAGE, SET_TOKEN } from "@/redux/mutation-types";
 import { produce } from "immer";
 import { AnyAction } from "redux";
 
@@ -20,7 +20,12 @@ const global = (state: GlobalState = globalState, action: AnyAction) =>
 			case SET_TOKEN:
 				draft.token = action.token;
 				break;
-
+			case SET_ASSEMBLY_SIZE:
+				draft.assemblySize = action.assemblySize;
+				break;
+			case SET_LANGUAGE:
+				draft.language = action.language;
+				break;
 			default:
 				return draft;
 		}

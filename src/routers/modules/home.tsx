@@ -1,6 +1,6 @@
 import React from "react";
+import { RouteObject } from "react-router-dom";
 import { LayoutIndex } from "../constant";
-import { RouteObject } from "../interface";
 import lazyLoad from "../util/lazyLoad";
 
 // home模块

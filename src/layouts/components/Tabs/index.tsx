@@ -23,10 +23,6 @@ const LayoutTabs = () => {
 	const dispatch = useDispatch();
 
 	const [activeValue, setActiveValue] = useState(pathname);
-	useEffect(() => {
-		// setActiveValue(pathname);
-		addTabs();
-	}, [pathname]);
 
 	const clickTabs = (path: string) => {
 		navigate(path);
@@ -41,6 +37,10 @@ const LayoutTabs = () => {
 		dispatch(setTabsList(tabsList));
 		setActiveValue(pathname);
 	};
+	useEffect(() => {
+		// setActiveValue(pathname);
+		addTabs();
+	}, [addTabs, pathname]);
 
 	const delTabs = (tabPath: string) => {
 		if (tabPath === pathname) {

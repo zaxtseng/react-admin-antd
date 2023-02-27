@@ -14,7 +14,7 @@ const menu = (state: MenuState = menuState, action: AnyAction) =>
 	produce(state, draft => {
 		switch (action.type) {
 			case types.UPDATE_COLLAPSE:
-				draft.isCollapse = !draft.isCollapse;
+				draft.isCollapse = action.isCollapse;
 				break;
 			case types.SET_MENU_LIST:
 				draft.menuList = action.menuList;

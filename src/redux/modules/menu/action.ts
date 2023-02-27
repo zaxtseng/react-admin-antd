@@ -7,8 +7,9 @@ interface MenuProps {
 	menuList: Menu.MenuOptions[];
 }
 
-export const updateCOllapse = () => ({
-	type: UPDATE_COLLAPSE
+export const updateCollapse = (isCollapse: boolean) => ({
+	type: UPDATE_COLLAPSE,
+	isCollapse
 });
 
 // * thunk

@@ -1,7 +1,9 @@
 import { getAuthorButtons } from "@/api/modules/login";
 import { RootState } from "@/redux";
 import { setAuthButtons } from "@/redux/modules/auth/action";
+import { updateCollapse } from "@/redux/modules/menu/action";
 import { Layout } from "antd";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useLocation } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
@@ -22,6 +24,20 @@ const LayoutIndex = () => {
 		const { data } = await getAuthorButtons();
 		dispatch(setAuthButtons(data!));
 	};
+	const listeningWindow = () => {
+		window.onresize = () => {
+			return (() => {
+				let screenWidth = document.body.clientWidth;
+				if (isCollapse === false && screenWidth < 1200) dispatch(updateCollapse(true));
+				if (isCollapse === false && screenWidth > 1200) dispatch(updateCollapse(false));
+			})();
+		};
+	};
+	useEffect(() => {
+		listeningWindow();
+		getAuthButtonData();
+	}, []);
+
 	return (
 		<Layout className="container">
 			<Sider trigger={null} collapsible collapsed={isCollapse}>

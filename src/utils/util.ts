@@ -1,4 +1,4 @@
-import { RouteObject } from "@/routers/interface";
+import { RouteObject } from "react-router-dom";
 
 /**
  * @description 获取需要展开的 subMenu
@@ -126,4 +126,53 @@ export const getBreadcrumbList = (path: string, menuList: Menu.MenuOptions[]) =>
 	} catch (e) {
 		return tempPath.map(item => item.title);
 	}
+};
+
+/**
+ * @description 获取浏览器默认语言
+ */
+export const getBrowserLang = () => {
+	let browserLang = navigator.language ? navigator.language : navigator.browserLanguage;
+	let defaultBrowserLang = "";
+	if (browserLang.toLowerCase() === "cn" || browserLang.toLowerCase() === "zh" || browserLang.toLowerCase() === "zh-cn") {
+		defaultBrowserLang = "zh";
+	} else {
+		defaultBrowserLang = "en";
+	}
+	return defaultBrowserLang;
+};
+
+// * localStorage
+
+/**
+ * @description 获取localStorage
+ */
+export const localGet = (key: string) => {
+	const value = window.localStorage.getItem(key);
+	try {
+		return JSON.parse(window.localStorage.getItem(key) as string);
+	} catch (error) {
+		return value;
+	}
+};
+
+/**
+ * @description 存储localStorage
+ */
+export const localSet = (key: string, value: any) => {
+	window.localStorage.setItem(key, JSON.stringify(value));
+};
+
+/**
+ * @description 清除localStorage
+ */
+export const localRemove = (key: string) => {
+	window.localStorage.removeItem(key);
+};
+
+/**
+ * @description 清空所有localStorage
+ */
+export const localClear = () => {
+	window.localStorage.clear();
 };
