@@ -1,4 +1,5 @@
 import { RootState } from "@/redux";
+// import { setWeakOrGray } from "@/redux/modules/global/action";
 import { FireOutlined } from "@ant-design/icons";
 import { Divider, Drawer, message, Switch } from "antd";
 import { useState } from "react";
