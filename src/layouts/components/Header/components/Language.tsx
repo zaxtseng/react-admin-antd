@@ -1,7 +1,7 @@
 import { RootState } from "@/redux";
 import { setLanguage } from "@/redux/modules/global/action";
 import { getBrowserLang } from "@/utils/util";
-import { Dropdown, MenuProps, Tooltip } from "antd";
+import { Dropdown, MenuProps } from "antd";
 import i18n from "i18next";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -36,9 +36,7 @@ const Language = () => {
 	};
 	return (
 		<Dropdown menu={menu} placement="bottom" trigger={["click"]} arrow={true}>
-			<Tooltip placement="bottom" title="语言">
-				<i className="icon-style iconfont icon-zhongyingwen" />
-			</Tooltip>
+			<i className="icon-style iconfont icon-zhongyingwen" />
 		</Dropdown>
 	);
 };

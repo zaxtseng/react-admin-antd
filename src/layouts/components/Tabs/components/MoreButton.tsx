@@ -24,9 +24,9 @@ export const MoreButton = (props: any) => {
 	const items: MenuProps["items"] = [
 		{
 			key: "1",
-			label: <span>关闭当前</span>,
+			label: <span>{t("tabs.closeCurrent")}</span>,
 			onClick: () => {
-				dispatch(props.delTabs);
+				dispatch(props.delTabs(pathname));
 			}
 		},
 		{

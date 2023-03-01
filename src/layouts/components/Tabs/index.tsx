@@ -43,6 +43,8 @@ const LayoutTabs = () => {
 	}, [addTabs, pathname]);
 
 	const delTabs = (tabPath: string) => {
+		if (pathname === HOME_URL) return;
+
 		if (tabPath === pathname) {
 			tabsList.forEach((item: Menu.MenuOptions, index: number) => {
 				if (item.path !== tabPath) return;

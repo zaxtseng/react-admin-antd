@@ -1,4 +1,4 @@
-import { Dropdown, MenuProps, Tooltip } from "antd";
+import { Dropdown, MenuProps } from "antd";
 
 const AssemblySize = () => {
 	const menu: MenuProps = {
@@ -20,9 +20,7 @@ const AssemblySize = () => {
 
 	return (
 		<Dropdown menu={menu} placement="bottom" trigger={["click"]} arrow={true}>
-			<Tooltip placement="bottom" title="组件大小">
-				<i className="icon-style iconfont icon-contentright"></i>
-			</Tooltip>
+			<i className="icon-style iconfont icon-contentright"></i>
 		</Dropdown>
 	);
 };

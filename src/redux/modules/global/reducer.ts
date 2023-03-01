@@ -1,16 +1,17 @@
 import { GlobalState } from "@/redux/interface";
-import { SET_ASSEMBLY_SIZE, SET_LANGUAGE, SET_TOKEN } from "@/redux/mutation-types";
+import { SET_ASSEMBLY_SIZE, SET_LANGUAGE, SET_TOKEN, SET_WEAK_OR_GRAY } from "@/redux/mutation-types";
 import { produce } from "immer";
 import { AnyAction } from "redux";
 
 const globalState: GlobalState = {
 	token: "",
 	userInfo: "",
-	assemblySize: "",
+	assemblySize: "middle",
 	language: "",
 	themeConfig: {
 		primary: "#1890ff",
-		isDark: false
+		isDark: false,
+		weakOrGray: ""
 	}
 };
 
@@ -25,6 +26,9 @@ const global = (state: GlobalState = globalState, action: AnyAction) =>
 				break;
 			case SET_LANGUAGE:
 				draft.language = action.language;
+				break;
+			case SET_WEAK_OR_GRAY:
+				draft.themeConfig.weakOrGray = action.weakOrGray;
 				break;
 			default:
 				return draft;

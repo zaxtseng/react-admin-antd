@@ -10,6 +10,7 @@ export interface TabsState {
 export interface ThemeConfigProp {
 	primary: string;
 	isDark: boolean;
+	weakOrGray: string;
 }
 
 // GlobalState

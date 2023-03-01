@@ -2,6 +2,7 @@ import { getMenuList } from "@/api/modules/login";
 import { RootState } from "@/redux";
 import { setAuthRouter } from "@/redux/modules/auth/action";
 import { setBreadcrumbList } from "@/redux/modules/breadcrumb/action";
+import { setMenuList as rxSetMenuList } from "@/redux/modules/menu/action";
 import { findAllBreadcrumb, getOpenKeys, handleRouter } from "@/utils/util";
 import * as Icons from "@ant-design/icons";
 import { Menu, MenuProps, Spin } from "antd";
@@ -50,6 +51,7 @@ const LayoutMenu = () => {
 			// 把路由菜单处理成一维数组,存储到redux 中, 做菜单权限判断
 			const dynamicRouter = handleRouter(res.data!);
 			dispatch(setAuthRouter(dynamicRouter));
+			dispatch(rxSetMenuList(res.data!));
 		} finally {
 			setLoading(false);
 		}

@@ -1,6 +1,7 @@
 import { showFullScreenLoading, tryHideFullScreenLoading } from "@/config/serverLoading";
 import { message } from "antd";
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import { NProgress } from "nprogress";
 import { ResultEnum } from "./enum";
 import { AxiosCanceler } from "./helper/axiosCancel";
 import { checkStatus } from "./helper/checkStatus";
@@ -31,6 +32,7 @@ class Request {
 
 		this.service.interceptors.request.use(
 			(config: InternalAxiosRequestConfig) => {
+				NProgress.start();
 				// * 将当前请求添加到 pending 中
 				axiosCanceler.addPending(config);
 				// * 如果当前请求不需要显示 loading, 在 api 服务中通过指定的第三个参数: { headers: { noLoading: true } } 来控制不显示Loading
@@ -53,6 +55,7 @@ class Request {
 		this.service.interceptors.response.use(
 			(response: AxiosResponse) => {
 				const { data, config } = response;
+				NProgress.done();
 				// * 在请求结束后, 移除本次请求(关闭 loading)
 				axiosCanceler.removePending(config);
 				tryHideFullScreenLoading();
@@ -75,6 +78,7 @@ class Request {
 			},
 			(error: AxiosError) => {
 				const { response } = error;
+				NProgress.done();
 				tryHideFullScreenLoading();
 				// 根据响应的状态码,做不同处理
 				if (response) return checkStatus(response.status);

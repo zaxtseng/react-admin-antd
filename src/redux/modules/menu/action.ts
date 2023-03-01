@@ -11,6 +11,10 @@ export const updateCollapse = (isCollapse: boolean) => ({
 	type: UPDATE_COLLAPSE,
 	isCollapse
 });
+export const setMenuList = (menuList: Menu.MenuOptions[]) => ({
+	type: UPDATE_COLLAPSE,
+	menuList
+});
 
 // * thunk
 export const getMenuListActionThunk = () => {

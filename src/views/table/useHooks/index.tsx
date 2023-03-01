@@ -1,6 +1,11 @@
-import { Table } from "antd";
+import useAuthButtons from "@/hooks/useAuthButtons";
+import { DatePicker, Table } from "antd";
 
 const UseHooks = () => {
+	// 按钮权限
+	const { BUTTONS } = useAuthButtons();
+	const { RangePicker } = DatePicker;
+
 	const dataSource = [
 		{
 			key: "1",
@@ -34,7 +39,12 @@ const UseHooks = () => {
 		}
 	];
 
-	return <Table dataSource={dataSource} columns={columns} />;
+	return (
+		<>
+			{BUTTONS.add ? <RangePicker /> : null}
+			<Table dataSource={dataSource} columns={columns} />
+		</>
+	);
 };
 
 export default UseHooks;

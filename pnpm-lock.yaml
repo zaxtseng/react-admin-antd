@@ -43,6 +43,7 @@ specifiers:
   redux-promise: ^0.6.0
   redux-thunk: ^2.4.2
   rollup-plugin-visualizer: ^5.9.0
+  screenfull: ^6.0.2
   stylelint: ^15.1.0
   stylelint-config-prettier: ^9.0.5
   stylelint-config-recess-order: ^4.0.0
@@ -76,6 +77,7 @@ dependencies:
   redux-persist: 6.0.0_react@18.2.0+redux@4.2.1
   redux-promise: 0.6.0
   redux-thunk: 2.4.2_redux@4.2.1
+  screenfull: 6.0.2
 
 devDependencies:
   '@commitlint/cli': 17.4.3
@@ -5570,6 +5572,11 @@ packages:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
     dependencies:
       loose-envify: 1.4.0
+    dev: false
+
+  /screenfull/6.0.2:
+    resolution: {integrity: sha512-AQdy8s4WhNvUZ6P8F6PB21tSPIYKniic+Ogx0AacBMjKP1GUHN2E9URxQHtCusiwxudnCKkdy4GrHXPPJSkCCw==}
+    engines: {node: ^14.13.1 || >=16.0.0}
     dev: false
 
   /scroll-into-view-if-needed/3.0.6:
