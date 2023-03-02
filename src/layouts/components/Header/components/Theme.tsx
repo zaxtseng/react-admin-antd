@@ -1,5 +1,5 @@
 import { RootState } from "@/redux";
-// import { setWeakOrGray } from "@/redux/modules/global/action";
+import { setWeakOrGray } from "@/redux/modules/global/action";
 import { FireOutlined } from "@ant-design/icons";
 import { Divider, Drawer, message, Switch } from "antd";
 import { useState } from "react";
@@ -31,7 +31,7 @@ const Theme = () => {
 					showDrawer();
 				}}
 			/>
-			<Drawer title="主题设置" closable={false} onClose={onClose} open={open}>
+			<Drawer title="主题设置" closable={false} onClose={onClose} open={open} width={320}>
 				<Divider className="divider">
 					<FireOutlined />
 					全局主题

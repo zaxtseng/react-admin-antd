@@ -1,4 +1,4 @@
-import { SET_ASSEMBLY_SIZE, SET_LANGUAGE, SET_TOKEN, SET_WEAK_OR_GRAY } from "@/redux/mutation-types";
+import { SET_ASSEMBLY_SIZE, SET_DARK, SET_LANGUAGE, SET_TOKEN, SET_WEAK_OR_GRAY } from "@/redux/mutation-types";
 
 export const setToken = (token: string) => ({
 	type: SET_TOKEN,
@@ -19,4 +19,10 @@ export const setAssemblySize = (assemblySize: string) => ({
 export const setWeakOrGray = (weakOrGray: string) => ({
 	type: SET_WEAK_OR_GRAY,
 	weakOrGray
+});
+
+// * setDark
+export const setDark = (isDark: boolean) => ({
+	type: SET_DARK,
+	isDark
 });
