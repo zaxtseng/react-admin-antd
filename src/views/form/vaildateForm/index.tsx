@@ -55,7 +55,7 @@ const ValidateForm = () => {
 						Submit
 					</Button>
 					<Button htmlType="button" onClick={onReset}>
-						Reset
+						Reset1
 					</Button>
 					<Button type="link" htmlType="button" onClick={onFill}>
 						Fill form
