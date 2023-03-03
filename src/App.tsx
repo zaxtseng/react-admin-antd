@@ -1,11 +1,12 @@
 import { RootState } from "@/redux";
 import Router from "@/routers";
-import { ConfigProvider, theme } from "antd";
+import { ConfigProvider } from "antd";
 import enUS from "antd/lib/locale/en_US";
 import zhCN from "antd/lib/locale/zh_CN";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import AuthRouter from "./routers/util/authRouter";
 import { getBrowserLang } from "./utils/util";
 
 // const {dark} =  theme;
@@ -29,7 +30,9 @@ function App() {
 		<div>
 			<BrowserRouter>
 				<ConfigProvider locale={i18nLocale} componentSize={assemblySize}>
-					<Router />
+					<AuthRouter>
+						<Router />
+					</AuthRouter>
 				</ConfigProvider>
 			</BrowserRouter>
 		</div>
