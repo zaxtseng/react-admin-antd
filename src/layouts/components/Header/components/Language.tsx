@@ -13,10 +13,10 @@ const Language = () => {
 		dispatch(setLanguage(val));
 	};
 
-	useEffect(() => {
-		setLanguage(language || getBrowserLang());
-		i18n.changeLanguage(language || getBrowserLang());
-	}, [language]);
+	// useEffect(() => {
+	// 	setLanguage(language || getBrowserLang());
+	// 	i18n.changeLanguage(language || getBrowserLang());
+	// }, [language]);
 
 	const menu: MenuProps = {
 		items: [

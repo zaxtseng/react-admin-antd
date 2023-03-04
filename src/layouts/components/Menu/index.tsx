@@ -2,29 +2,40 @@ import { getMenuList } from "@/api/modules/login";
 import { RootState } from "@/redux";
 import { setAuthRouter } from "@/redux/modules/auth/action";
 import { setBreadcrumbList } from "@/redux/modules/breadcrumb/action";
-import { setMenuList as rxSetMenuList } from "@/redux/modules/menu/action";
-import { findAllBreadcrumb, getOpenKeys, handleRouter } from "@/utils/util";
+import { setMenuList as reduxSetMenuList } from "@/redux/modules/menu/action";
+import { findAllBreadcrumb, getOpenKeys, handleRouter, searchRoute } from "@/utils/util";
 import * as Icons from "@ant-design/icons";
-import { Menu, MenuProps, Spin } from "antd";
+import type { MenuProps } from "antd";
+import { Menu, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "./components/Logo";
 import "./index.less";
 
-type MenuItem = Required<MenuProps>["items"][number];
-
 const LayoutMenu = () => {
 	const dispatch = useDispatch();
-
-	const { isCollapse } = useSelector((state: RootState) => state.menu);
+	const { isCollapse, menuList: reduxMenuList } = useSelector((state: RootState) => state.menu);
 	const { pathname } = useLocation();
 	const [selectedKeys, setSelectedKeys] = useState<string[]>([pathname]);
 	const [openKeys, setOpenKeys] = useState<string[]>([]);
 
-	const [menuList, setMenuList] = useState<MenuItem[]>([]);
-	const [loading, setLoading] = useState<boolean>(false);
+	// 刷新页面菜单保持高亮
+	useEffect(() => {
+		setSelectedKeys([pathname]);
+		isCollapse ? null : setOpenKeys(getOpenKeys(pathname));
+	}, [pathname, isCollapse]);
 
+	// 设置当前展开的 subMenu
+	const onOpenChange = (openKeys: string[]) => {
+		if (openKeys.length === 0 || openKeys.length === 1) return setOpenKeys(openKeys);
+		const latestOpenKey = openKeys[openKeys.length - 1];
+		if (latestOpenKey.includes(openKeys[0])) return setOpenKeys(openKeys);
+		setOpenKeys([latestOpenKey]);
+	};
+
+	// 定义 menu 类型
+	type MenuItem = Required<MenuProps>["items"][number];
 	const getItem = (
 		label: React.ReactNode,
 		key?: React.Key | null,
@@ -40,18 +51,39 @@ const LayoutMenu = () => {
 			type
 		} as MenuItem;
 	};
-	// 获取菜单列表并处理成 antd 需要的格式
+
+	// 动态渲染 Icon 图标
+	const customIcons: { [key: string]: any } = Icons;
+	const addIcon = (name: string) => {
+		return React.createElement(customIcons[name]);
+	};
+
+	// 处理后台返回菜单 key 值为 antd 菜单需要的 key 值
+	const deepLoopFloat = (menuList: Menu.MenuOptions[], newArr: MenuItem[] = []) => {
+		menuList.forEach((item: Menu.MenuOptions) => {
+			// 下面判断代码解释 *** !item?.children?.length   ==>   (!item.children || item.children.length === 0)
+			if (!item?.children?.length) return newArr.push(getItem(item.title, item.path, addIcon(item.icon!)));
+			newArr.push(getItem(item.title, item.path, addIcon(item.icon!), deepLoopFloat(item.children)));
+		});
+		return newArr;
+	};
+
+	// 获取菜单列表并处理成 antd menu 需要的格式
+	const [menuList, setMenuList] = useState<MenuItem[]>([]);
+	const [loading, setLoading] = useState(false);
 	const getMenuData = async () => {
 		setLoading(true);
 		try {
-			const res = await getMenuList();
-			res.data && setMenuList(deepLoopFloat(res.data));
-			// 存储处理过后的所有面包屑导航栏到redux
-			dispatch(setBreadcrumbList(findAllBreadcrumb(res.data!)));
-			// 把路由菜单处理成一维数组,存储到redux 中, 做菜单权限判断
-			const dynamicRouter = handleRouter(res.data!);
+			const { data } = await getMenuList();
+			if (!data) return;
+			setMenuList(deepLoopFloat(data));
+			// 存储处理过后的所有面包屑导航栏到 redux 中
+			console.log("findAllBreadcrumb", findAllBreadcrumb(data));
+			dispatch(setBreadcrumbList(findAllBreadcrumb(data)));
+			// 把路由菜单处理成一维数组，存储到 redux 中，做菜单权限判断
+			const dynamicRouter = handleRouter(data);
 			dispatch(setAuthRouter(dynamicRouter));
-			dispatch(rxSetMenuList(res.data!));
+			dispatch(reduxSetMenuList(data));
 		} finally {
 			setLoading(false);
 		}
@@ -59,46 +91,19 @@ const LayoutMenu = () => {
 	useEffect(() => {
 		getMenuData();
 	}, []);
-	// 动态渲染 Icon
-	const customIcons: { [key: string]: any } = Icons;
-	const addIcon = (name: string) => {
-		return React.createElement(customIcons[name]);
-	};
-	// 处理后台返回菜单 key 值为antd菜单需要的key值
-	const deepLoopFloat = (menuList: Menu.MenuOptions[], newArr: MenuItem[] = []) => {
-		menuList.forEach((item: Menu.MenuOptions) => {
-			if (!item?.children?.length) return newArr.push(getItem(item.title, item.path, addIcon(item.icon!)));
 
-			newArr.push(getItem(item.title, item.path, addIcon(item.icon!), deepLoopFloat(item.children)));
-		});
-		return newArr;
-	};
-
+	// 点击当前菜单跳转页面
 	const navigate = useNavigate();
-	// 点击当前菜单
 	const clickMenu: MenuProps["onClick"] = ({ key }: { key: string }) => {
+		const route = searchRoute(key, reduxMenuList);
+		// if (route.isLink) window.open(route.isLink, "_blank");
 		navigate(key);
 	};
 
-	// 设置当前展开的 subMenu
-	const onOpenChange = () => {
-		if (openKeys.length === 0 || openKeys.length === 1) return setOpenKeys(openKeys);
-		const latestOpenKey = openKeys[openKeys.length - 1];
-		// 最新展开的 subMenu
-		if (latestOpenKey.includes(openKeys[0])) return setOpenKeys(openKeys);
-		setOpenKeys([latestOpenKey]);
-	};
-	useEffect(() => {
-		// getSubMenuActive();
-		// setMenuActive(pathname);
-		setSelectedKeys([pathname]);
-		isCollapse ? null : setOpenKeys(getOpenKeys(pathname));
-	}, [pathname, isCollapse]);
-
 	return (
 		<div className="menu">
-			<Spin spinning={loading} tip="loading...">
-				<Logo />
+			<Spin spinning={loading} tip="Loading...">
+				<Logo isCollapse={isCollapse}></Logo>
 				<Menu
 					theme="dark"
 					mode="inline"

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Theme = () => {
 	const dispatch = useDispatch();
-	const { weakOrGray } = useSelector((state: RootState) => state.global.themeConfig);
+	// const { weakOrGray } = useSelector((state: RootState) => state.global.themeConfig);
 
 	const [open, setOpen] = useState<boolean>(false);
 
@@ -46,7 +46,7 @@ const Theme = () => {
 						}}
 					/>
 				</div>
-				<div className="theme-item">
+				{/* <div className="theme-item">
 					<span>灰色模式</span>
 					<Switch
 						checked={weakOrGray === "gray"}
@@ -63,7 +63,7 @@ const Theme = () => {
 							onChange(e, "weak");
 						}}
 					/>
-				</div>
+				</div> */}
 			</Drawer>
 		</>
 	);

@@ -57,21 +57,27 @@ const LayoutTabs = () => {
 		message.success("删除tabs标签");
 		dispatch(setTabsList(tabsList.filter((item: Menu.MenuOptions) => item.path !== tabPath)));
 	};
+	const items = tabsList.map(tab => {
+		return {
+			label: (
+				<span>
+					{tab.path === HOME_URL ? <HomeFilled /> : ""}
+					{tab.title}
+				</span>
+			),
+			key: tab.path,
+			closable: tab.path !== HOME_URL
+		};
+	});
 	return (
-		<Tabs activeKey={activeValue} onChange={clickTabs} hideAdd type="editable-card" onEdit={path => delTabs(path as string)}>
-			{tabsList.map((tab: Menu.MenuOptions) => (
-				<TabPane
-					key={tab.path}
-					closable={tab.path !== HOME_URL}
-					tab={
-						<span>
-							{tab.path === HOME_URL ? <HomeFilled /> : ""}
-							{tab.title}
-						</span>
-					}
-				></TabPane>
-			))}
-		</Tabs>
+		<Tabs
+			items={items}
+			activeKey={activeValue}
+			onChange={clickTabs}
+			hideAdd
+			type="editable-card"
+			onEdit={path => delTabs(path as string)}
+		></Tabs>
 	);
 };
 

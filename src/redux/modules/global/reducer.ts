@@ -11,7 +11,7 @@ const globalState: GlobalState = {
 	themeConfig: {
 		primary: "#1890ff",
 		isDark: false,
-		weakOrGray: ""
+		weakOrGray: "weak"
 	}
 };
 

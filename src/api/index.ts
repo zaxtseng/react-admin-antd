@@ -1,7 +1,6 @@
 import { showFullScreenLoading, tryHideFullScreenLoading } from "@/config/serverLoading";
 import { message } from "antd";
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
-import { NProgress } from "nprogress";
 import { ResultEnum } from "./enum";
 import { AxiosCanceler } from "./helper/axiosCancel";
 import { checkStatus } from "./helper/checkStatus";
@@ -32,7 +31,7 @@ class Request {
 
 		this.service.interceptors.request.use(
 			(config: InternalAxiosRequestConfig) => {
-				NProgress.start();
+				// NProgress.start();
 				// * 将当前请求添加到 pending 中
 				axiosCanceler.addPending(config);
 				// * 如果当前请求不需要显示 loading, 在 api 服务中通过指定的第三个参数: { headers: { noLoading: true } } 来控制不显示Loading
@@ -43,6 +42,8 @@ class Request {
 				return config;
 			},
 			(error: AxiosError) => {
+				console.log("baocuo");
+
 				return Promise.reject(error);
 			}
 		);
@@ -55,7 +56,9 @@ class Request {
 		this.service.interceptors.response.use(
 			(response: AxiosResponse) => {
 				const { data, config } = response;
-				NProgress.done();
+				console.log("响应");
+
+				// NProgress.done();
 				// * 在请求结束后, 移除本次请求(关闭 loading)
 				axiosCanceler.removePending(config);
 				tryHideFullScreenLoading();
@@ -69,6 +72,7 @@ class Request {
 				// * 全局错误信息拦截 (防止下载文件的时候返回数据流, 没有code, 直接报错)
 				if (data.code && data.code !== ResultEnum.SUCCESS) {
 					message.error(data.msg);
+					console.log("错误拦截");
 
 					return Promise.reject(data);
 				}
@@ -78,12 +82,14 @@ class Request {
 			},
 			(error: AxiosError) => {
 				const { response } = error;
-				NProgress.done();
+				// NProgress.done();
 				tryHideFullScreenLoading();
 				// 根据响应的状态码,做不同处理
 				if (response) return checkStatus(response.status);
 				// 服务端未返回数据 断网处理: 跳转断网页面
 				if (!window.navigator.onLine) return window.location.href === "/500";
+				console.log("响应失败");
+
 				return Promise.reject(error);
 			}
 		);

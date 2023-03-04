@@ -1,7 +1,7 @@
 import { PORT1 } from "@/api/config/servicePort";
 import { ResPage, User } from "@/api/interface/index";
 
-import http from "@/api";
+import http from "@/api/index1";
 
 /**
  * @name 用户管理模块

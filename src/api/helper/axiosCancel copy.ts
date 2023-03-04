@@ -1,4 +1,4 @@
-import { isFunction } from "@/utils/is/index";
+import { isFunction } from "@/utils/is";
 import axios, { AxiosRequestConfig, Canceler } from "axios";
 import qs from "qs";
 
@@ -11,25 +11,25 @@ export const getPendingUrl = (config: AxiosRequestConfig) =>
 
 export class AxiosCanceler {
 	/**
-	 * @description: 添加请求
+	 * @description 添加请求
 	 * @param {Object} config
 	 */
 	addPending(config: AxiosRequestConfig) {
-		// * 在请求开始前，对之前的请求做检查取消操作
+		// * 在请求开始前,对之前的请求做检查取消操作
 		this.removePending(config);
 		const url = getPendingUrl(config);
 		config.cancelToken =
 			config.cancelToken ||
 			new axios.CancelToken(cancel => {
 				if (!pendingMap.has(url)) {
-					// 如果 pending 中不存在当前请求，则添加进去
+					// 如果 pending 中不存在当前请求, 则添加进去
 					pendingMap.set(url, cancel);
 				}
 			});
 	}
 
 	/**
-	 * @description: 移除请求
+	 * @description 移除请求
 	 * @param {Object} config
 	 */
 	removePending(config: AxiosRequestConfig) {
