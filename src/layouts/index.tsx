@@ -6,7 +6,6 @@ import { Layout } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useLocation } from "react-router-dom";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
 import LayoutFooter from "./components/Footer/index";
 import LayoutHeader from "./components/Header/index";
 import LayoutMenu from "./components/Menu/index";
@@ -47,11 +46,7 @@ const LayoutIndex = () => {
 				<LayoutHeader />
 				<LayoutTabs />
 				<Content>
-					<TransitionGroup>
-						<CSSTransition key={pathname} timeout={200} classNames="fade" exit={false}>
-							<Outlet />
-						</CSSTransition>
-					</TransitionGroup>
+					<Outlet />
 				</Content>
 				<LayoutFooter />
 			</Layout>

@@ -6,7 +6,7 @@ import "./index.less";
 
 const NotFound: FC = () => {
 	const navigate = useNavigate();
-	const goHome = () => navigate("/home");
+	const goHome = () => navigate("/home/index");
 
 	return (
 		<Result

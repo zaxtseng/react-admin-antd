@@ -12,7 +12,7 @@ const auth = (state: AuthState = authState, action: AnyAction) =>
 	produce(state, draft => {
 		switch (action.type) {
 			case SET_AUTH_BUTTONS:
-				draft.authButtons = action.getAuthorButtons;
+				draft.authButtons = action.authButtons;
 				break;
 			case SET_AUTH_ROUTER:
 				draft.authRouter = action.authRouter;

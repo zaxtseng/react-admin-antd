@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const NotAuth = () => {
 	const navigate = useNavigate();
-	const goHome = () => navigate("/home");
+	const goHome = () => navigate("/home/index");
 	return (
 		<Result
 			status="403"

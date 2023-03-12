@@ -1,6 +1,6 @@
-import React from "react";
-import lazyLoad from "@/routers/util/lazyLoad";
 import { LayoutIndex } from "@/routers/constant";
+import lazyLoad from "@/routers/util/lazyLoad";
+import React from "react";
 import { RouteObject } from "react-router-dom";
 
 // 表单 Form 模块

@@ -1,6 +1,6 @@
 import React from "react";
+import { RouteObject } from "react-router-dom";
 import { LayoutIndex } from "../constant";
-import { RouteObject } from "../interface";
 import lazyLoad from "../util/lazyLoad";
 
 const tableRouter: Array<RouteObject> = [
@@ -8,7 +8,7 @@ const tableRouter: Array<RouteObject> = [
 		element: <LayoutIndex />,
 		children: [
 			{
-				path: "/table/useHooks",
+				path: "/proTable/useHooks",
 				element: lazyLoad(React.lazy(() => import("@/views/table/useHooks"))),
 				meta: {
 					keepAlive: true,
@@ -18,7 +18,7 @@ const tableRouter: Array<RouteObject> = [
 				}
 			},
 			{
-				path: "/table/useComponent",
+				path: "/proTable/useComponent",
 				element: lazyLoad(React.lazy(() => import("@/views/table/useComponent"))),
 				meta: {
 					keepAlive: true,

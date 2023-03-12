@@ -5,7 +5,7 @@ import "./index.less";
 
 const NotNetwork = () => {
 	const navigate = useNavigate();
-	const goHome = () => navigate("/home");
+	const goHome = () => navigate("/home/index");
 
 	return (
 		<Result

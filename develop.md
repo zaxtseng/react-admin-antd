@@ -4,13 +4,13 @@
 
 项目需要 node 版本在 16 或 16 以上.并且安装 vite 和 pnpm.
 
-```
+```bash
 pnpm create vite react-admin-antd --template react-ts
 ```
 
 ## 链接远程仓库
 
-```
+```bash
 git init
 git add .
 git commit -m "feat: 项目初始化"
@@ -24,7 +24,7 @@ git push -u origin master
 新增文件`.env`, `.env.development`, `.env.production`, `.env.test`.
 // .env
 
-```env
+```yaml
 # title
 VITE_GLOB_APP_TITLE = 'React-Admin-Antd'
 
@@ -46,7 +46,7 @@ VITE_DROP_CONSOLE = true
 
 // .env.development
 
-```
+```yaml
 # 本地环境
 NODE_ENV = 'development'
 
@@ -56,7 +56,7 @@ VITE_API_URL = '/api'
 
 // .env.production
 
-```
+```yaml
 # 线上环境
 NODE_ENV = "production"
 
@@ -66,7 +66,7 @@ VITE_API_URL = "https://mock.mengxuegu.com/mock/62abda3212c1416424630a45"
 
 // .env.test
 
-```
+```yaml
 # 测试环境
 NODE_ENV = "test"
 
@@ -104,6 +104,35 @@ declare interface ViteEnv {
 	VITE_BUILD_GZIP: boolean;
 	VITE_REPORT: boolean;
 }
+```
+
+# 统一编辑器规范
+
+创建`.editorconfig`.
+
+```yaml
+# https://editorconfig.org
+
+# 已经是顶层配置文件，不必继续向上搜索
+root = true
+
+[*]
+# 编码字符集
+charset = utf-8
+# 缩进风格是空格
+indent_style = space
+# 一个缩进占用两个空格，因没有设置tab_with，一个Tab占用2列
+indent_size = 2
+# 换行符 lf
+end_of_line = lf
+# 文件以一个空白行结尾
+insert_final_newline = true
+# 去除行首的任意空白字符
+trim_trailing_whitespace = true
+
+[*.md]
+insert_final_newline = false
+trim_trailing_whitespace = false
 ```
 
 ## 安装格式化配置工具
@@ -478,21 +507,21 @@ module.exports = {
 
 对 git 提交时的信息进行检查.
 
-```
+```bash
 pnpm add @commitlint/cli @commitlint/config-conventional -D
 ```
 
 然后在根目录创建配置文件 `.commitlintrc.cjs`
 
-```
+```js
 module.exports = {
-  extends: ["@commitlint/config-conventional"]
-}
+	extends: ["@commitlint/config-conventional"]
+};
 ```
 
 然后把 commitlint 命令也添加 Husky Hook。运行命令：
 
-```
+```bash
 npx husky add .husky/commit-msg "npx --no-install commitlint -e $HUSKY_GIT_PARAMS"
 ```
 
